@@ -1,4 +1,5 @@
 var Timer = {
+    self: this,
     
     // Интервал для работы, сек
     workTime: ko.observable(60 * 15),
@@ -39,7 +40,9 @@ var Timer = {
     
     addTask: function() {
         var prompt = phonon.prompt('Введите название задачи', 'Добавление задачи', true, 'Добавить', 'Отменить');
-        prompt.on('confirm', function(inputValue) {} );
+        prompt.on('confirm', function(inputValue) {
+            Timer.tasks.push({ name: inputValue, tomatos: 0 })
+        });
         prompt.on('cancel', function() {} );
     }
 }
