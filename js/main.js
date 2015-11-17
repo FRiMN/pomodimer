@@ -49,3 +49,6 @@ ko.applyBindings(Timer);
 
 var timerElem = document.querySelector('#timer');
 timerElem.on('tap', Timer.startTimer);
+
+var addTaskElem = document.querySelector('#add-task a');
+addTaskElem.on('tap', Timer.addTask);
