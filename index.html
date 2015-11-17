@@ -98,7 +98,7 @@
                 </ul>
                 <ul class="list">
                     <li class="padded-list" id="add-task">
-                        <a href="">
+                        <a href="" data-panel-id="addTaskPanel">
                             <span class="icon icon-add pull-left"></span>
                             <span>Добавить новую задачу</span>
                         </a>
@@ -219,6 +219,17 @@
                 return n;
             }
         </script>
+        
+        <div id="addTaskPanel" class="panel">
+                <header class="header-bar">
+                    <a class="btn icon icon-close pull-right" href="#" data-panel-close="true"></a>
+                    <h1 class="title">Panel</h1>
+                </header>
+        
+                <div class="content">
+                    <p class="padded-full">The contents of my panel go here.</p>
+                </div>
+        </div>
     </timer>
     
     

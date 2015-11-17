@@ -40,17 +40,17 @@ var Timer = {
     
     addTask: function() {
         log('func')
-        var prompt = phonon.prompt('Введите название задачи', 'Добавление задачи', true, 'Добавить', 'Отменить');
-        log('promt')
-        prompt.on('confirm', function(inputValue) {
-            log('on')
-            inputValue = inputValue.trim();
-            if ( inputValue.length > 0 ) {
-                log('task')
-                Timer.tasks.push({ name: inputValue, tomatos: 0 });
-            }
-        });
-        prompt.on('cancel', function() {} );
+        //var prompt = phonon.prompt('Введите название задачи', 'Добавление задачи', true, 'Добавить', 'Отменить');
+        //log('promt')
+        //prompt.on('confirm', function(inputValue) {
+        //    log('on')
+        //    inputValue = inputValue.trim();
+        //    if ( inputValue.length > 0 ) {
+        //        log('task')
+        //        Timer.tasks.push({ name: inputValue, tomatos: 0 });
+        //    }
+        //});
+        //prompt.on('cancel', function() {} );
     }
 }
 
