@@ -223,11 +223,16 @@
         <div id="addTaskPanel" class="panel">
                 <header class="header-bar">
                     <a class="btn icon icon-close pull-right" href="#" data-panel-close="true"></a>
-                    <h1 class="title">Panel</h1>
+                    <h1 class="title">Добавить задачу</h1>
                 </header>
         
                 <div class="content">
-                    <p class="padded-full">The contents of my panel go here.</p>
+                    <p class="padded-full">
+                        <input type="text" placeholder="Название задачи" />
+                    </p>
+                    <p class="padded-full text-right">
+                        <a class="btn primary" id="addTaskConfirm">Добавить</a>
+                    </p>
                 </div>
         </div>
     </timer>
@@ -270,7 +275,7 @@
         //    }
         //});
         
-        Logger.show();
+        //Logger.show();
     </script>
     
     <script src="js/main.js"></script>

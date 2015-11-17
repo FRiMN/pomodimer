@@ -32,3 +32,7 @@ body, button, input, label, p, select, textarea {
 .backdrop-panel {
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+.panel .content .btn {
+    line-height: 2.7em;
+}

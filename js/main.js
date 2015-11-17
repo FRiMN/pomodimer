@@ -18,7 +18,7 @@ var Timer = {
     
     // Список дел на сегодня
     tasks: ko.observableArray([
-        { name: 'Дописать приложение таймера', tomatos: 0 }
+        //{ name: 'Дописать приложение таймера', tomatos: 0 }
     ]),
     
     startTimer: function() {
@@ -51,6 +51,14 @@ var Timer = {
         //    }
         //});
         //prompt.on('cancel', function() {} );
+        var taskNameField = document.querySelector('#addTaskPanel .content input');
+        taskNameField.value = taskNameField.value.trim();
+        if ( taskNameField.value.length > 0 ) {
+            log('task')
+            Timer.tasks.push({ name: taskNameField.value, tomatos: 0 });
+        }
+        taskNameField.value = '';
+        phonon.panel('#addTaskPanel').close();
     }
 }
 
@@ -60,5 +68,5 @@ ko.applyBindings(Timer);
 var timerElem = document.querySelector('#timer');
 timerElem.on('tap', Timer.startTimer);
 
-var addTaskElem = document.querySelector('#add-task a');
+var addTaskElem = document.querySelector('#addTaskConfirm');
 addTaskElem.on('tap', Timer.addTask);
