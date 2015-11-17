@@ -18,7 +18,7 @@ var Timer = {
     
     // Список дел на сегодня
     tasks: ko.observableArray([
-        //{ name: 'Дописать приложение таймера', tomatos: 0 }
+        { name: 'Дописать приложение таймера', tomatos: 0 }
     ]),
     
     startTimer: function() {
@@ -57,6 +57,7 @@ var Timer = {
         if ( taskNameField.value.length > 0 ) {
             log('task')
             Timer.tasks.push({ name: taskNameField.value, tomatos: 0 });
+            Timer.tasks.valueHasMutated();
         }
         taskNameField.value = '';
         phonon.panel('#addTaskPanel').close();
