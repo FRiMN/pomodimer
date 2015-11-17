@@ -36,3 +36,9 @@ body, button, input, label, p, select, textarea {
 .panel .content .btn {
     line-height: 2.7em;
 }
+
+#loggerContainer,
+#logger,
+#loggerTab {
+    box-sizing: content-box;
+}
