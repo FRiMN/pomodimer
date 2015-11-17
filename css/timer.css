@@ -24,7 +24,7 @@
 
 
 
-tasklist.app-page {
+#tab-tasklist {
     background-color: #b71c1c;
 }
 #task-list {
@@ -32,4 +32,7 @@ tasklist.app-page {
 }
 #add-task {
     background-color: #c62828;
+}
+#add-task a {
+    color: #e57373;
 }

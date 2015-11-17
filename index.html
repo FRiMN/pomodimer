@@ -20,7 +20,7 @@
     
     
     
-    <taskList data-page="true">
+    <!--<taskList data-page="true">
         <header class="header-bar">
             <div class="pull-left">
                 <h1 class="title">Pomodimer</h1>
@@ -47,7 +47,7 @@
             </ul>
             
         </div>
-    </taskList>
+    </taskList>-->
     
     
     
@@ -57,13 +57,24 @@
     
     <timer data-page="true">
         <link rel="stylesheet" href="css/timer.css">
+        
         <header class="header-bar">
             <div class="pull-left">
                 <h1 class="title">Pomodimer</h1>
             </div>
             <a class="btn pull-right icon icon-settings" data-popover-id="pop-settings"></a>
         </header>
-        <div class="content">
+        
+        <nav class="tabs header-tabs">
+            <div class="tab-items">
+                <a class="tab-item">Список дел</a>
+                <a class="tab-item">Таймер</a>
+                <!--<a class="tab-item"><i class="icon icon-settings"></i></a>-->
+            </div>
+            <div class="tab-indicator"></div>
+        </nav>
+        
+        <div class="content" data-tab-contents="true" data-disable-swipe="false">
             
             <div class="popover" id="pop-settings" data-status="closed">
                 <ul class="list">
@@ -71,16 +82,38 @@
                 </ul>
             </div>
             
-            <h3 id="current-task-name" class="text-center" data-bind="text: currentTask"></h3>
             
-            <div id="timer"></div>
             
-            <!--<div class="text-center">-->
-            <!--    <button class="btn" onclick="window.plugins.insomnia.keepAwake()">keep awake</button>-->
-            <!--    <button class="btn" onclick="window.plugins.insomnia.allowSleepAgain()">allow sleep again</button>-->
-            <!--</div>-->
             
-            <!--<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>-->
+            <div class="tab-content" id="tab-tasklist">
+                <ul class="list" id="task-list" data-bind="foreach: tasks">
+                    <li class="padded-list">
+                        <a>
+                            <span class="" data-bind="text: name"></span>
+                            <span class="pull-right" data-bind="text: tomatos"></span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="list">
+                    <li class="padded-list" id="add-task">
+                        <a>
+                            <span class="icon icon-add pull-left"></span>
+                            <span>Добавить новую задачу</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            
+            
+            
+            <div class="tab-content" id="tab-timer">
+                <h3 id="current-task-name" class="text-center" data-bind="text: currentTask"></h3>
+                
+                <div id="timer"></div>
+                
+                <!--<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>-->
+            </div>
         </div>
         
         
@@ -140,12 +173,12 @@
             };
             
             
-            document.querySelector('[data-popover-id]').on('tap', function() {
-                var id = this['data-popover-id']
-                if ( this['data-status'] === 'closed' ) {
-                    phono.popover('#my-popover').open();
-                }
-            })
+            //document.querySelector('[data-popover-id]').on('tap', function() {
+            //    var id = this['data-popover-id']
+            //    if ( this['data-status'] === 'closed' ) {
+            //        phono.popover('#my-popover').open();
+            //    }
+            //})
             
             
             
@@ -192,22 +225,22 @@
         
         phonon.navigator().start();
         
-        window.body = document.getElementById('body');
-        ontouch(window.body, function(evt, dir, phase, swipetype, distance){
-            var n = phonon.navigator();
-            
-            if ( phase == 'move' && dir == 'right' ) {
-                if ( n.currentPage === 'timer' ) {
-                    n.changePage('tasklist');
-                }
-            } else
-            
-            if ( phase == 'move' && dir == 'left' ) {
-                if ( n.currentPage === 'tasklist' ) {
-                    n.changePage('timer');
-                }
-            }
-        });
+        //window.body = document.getElementById('body');
+        //ontouch(window.body, function(evt, dir, phase, swipetype, distance){
+        //    var n = phonon.navigator();
+        //    
+        //    if ( phase == 'move' && dir == 'right' ) {
+        //        if ( n.currentPage === 'timer' ) {
+        //            n.changePage('tasklist');
+        //        }
+        //    } else
+        //    
+        //    if ( phase == 'move' && dir == 'left' ) {
+        //        if ( n.currentPage === 'tasklist' ) {
+        //            n.changePage('timer');
+        //        }
+        //    }
+        //});
     </script>
     
     <script src="js/main.js"></script>

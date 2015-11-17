@@ -1,8 +1,15 @@
+nav.tabs,
 .header-bar {
     background-color: #e53935;
 }
 .header-bar .title {
     line-height: 1;
+}
+nav.tabs .tab-items .tab-item {
+    color: white;
+}
+.tabs .tab-indicator {
+    background-color: white;
 }
 
 .app-page,
