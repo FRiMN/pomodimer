@@ -1,5 +1,4 @@
 var Timer = {
-    self: this,
     
     // Интервал для работы, сек
     workTime: ko.observable(60 * 15),
@@ -57,7 +56,10 @@ var Timer = {
         if ( taskNameField.value.length > 0 ) {
             log('task')
             Timer.tasks.push({ name: taskNameField.value, tomatos: 0 });
-            Timer.tasks.valueHasMutated();
+            //Timer.tasks.valueHasMutated();
+            var data = Timer.tasks().slice(0);
+            Timer.tasks([]);
+            Timer.tasks(data);
         }
         taskNameField.value = '';
         phonon.panel('#addTaskPanel').close();
