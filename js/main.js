@@ -41,7 +41,10 @@ var Timer = {
     addTask: function() {
         var prompt = phonon.prompt('Введите название задачи', 'Добавление задачи', true, 'Добавить', 'Отменить');
         prompt.on('confirm', function(inputValue) {
-            Timer.tasks.push({ name: inputValue, tomatos: 0 })
+            inputValue = inputValue.trim();
+            if ( inputValue.length > 0 ) {
+                Timer.tasks.push({ name: inputValue, tomatos: 0 });
+            }
         });
         prompt.on('cancel', function() {} );
     }
