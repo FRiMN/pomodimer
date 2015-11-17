@@ -40,7 +40,7 @@ var Timer = {
     
     addTask: function() {
         log('func')
-        log(Timer.tasks)
+        log(Timer.tasks().length)
         //var prompt = phonon.prompt('Введите название задачи', 'Добавление задачи', true, 'Добавить', 'Отменить');
         //log('promt')
         //prompt.on('confirm', function(inputValue) {
