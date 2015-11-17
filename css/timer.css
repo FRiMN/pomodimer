@@ -1,0 +1,35 @@
+#timer {
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 12%;
+    margin-bottom: 15%;
+}
+#timer .progressbar-text {
+    font-size: 55px;
+    top: calc(50% - 5px) !important;
+}
+
+#current-task-name {
+    height: 2.2em;
+    overflow: hidden;
+    color: white;
+    margin: 1em 5px;
+}
+
+
+
+
+
+
+
+
+
+tasklist.app-page {
+    background-color: #b71c1c;
+}
+#task-list {
+    background-color: #d32f2f;
+}
+#add-task {
+    background-color: #c62828;
+}

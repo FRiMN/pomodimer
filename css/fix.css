@@ -1,0 +1,26 @@
+.header-bar {
+    background-color: #e53935;
+}
+.header-bar .title {
+    line-height: 1;
+}
+
+.app-page,
+body {
+    background-color: #f44336;
+    color: white;
+}
+
+body, button, input, label, p, select, textarea {
+    font-family: "Segoe UI", sans-serif;
+}
+
+.list li a {
+    color: white;
+}
+
+/*.app-page.page-sliding.right {
+    -webkit-animation: none;
+    animation: none;
+    transition: all .3s ease-in-out 0s;
+}*/

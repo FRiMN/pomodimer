@@ -1,0 +1,214 @@
+<head>
+    <title>Pomodimer</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name=viewport content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
+    
+    <script type="text/javascript" src="cordova.js"></script>
+    
+    <script src="js/phonon.min.js"></script>
+    <link rel="stylesheet" href="css/phonon.min.css">
+    
+    <script src="js/progressbar.min.js"></script>
+    
+    <script src="js/touch.js"></script>
+    
+    <script src="js/knockout-3.3.0.min.js"></script>
+    
+    <link rel="stylesheet" href="css/fix.css">
+</head>
+<body id="body">
+    
+    
+    
+    <taskList data-page="true">
+        <header class="header-bar">
+            <div class="pull-left">
+                <h1 class="title">Pomodimer</h1>
+            </div>
+            <a class="btn pull-right icon icon-settings" data-popover-id="pop-settings"></a>
+        </header>
+        <div class="content">
+            
+            <ul class="list" id="task-list" data-bind="foreach: tasks">
+                <li class="padded-list">
+                    <a>
+                        <span class="" data-bind="text: name"></span>
+                        <span class="pull-right" data-bind="text: tomatos"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="list">
+                <li class="padded-list" id="add-task">
+                    <a>
+                        <span class="icon icon-add pull-left"></span>
+                        <span>Добавить новую задачу</span>
+                    </a>
+                </li>
+            </ul>
+            
+        </div>
+    </taskList>
+    
+    
+    
+    
+    
+    
+    
+    <timer data-page="true">
+        <link rel="stylesheet" href="css/timer.css">
+        <header class="header-bar">
+            <div class="pull-left">
+                <h1 class="title">Pomodimer</h1>
+            </div>
+            <a class="btn pull-right icon icon-settings" data-popover-id="pop-settings"></a>
+        </header>
+        <div class="content">
+            
+            <div class="popover" id="pop-settings" data-status="closed">
+                <ul class="list">
+                    <li><a class="padded-list js-stop-timer">Остановить таймер</a></li>
+                </ul>
+            </div>
+            
+            <h3 id="current-task-name" class="text-center" data-bind="text: currentTask"></h3>
+            
+            <div id="timer"></div>
+            
+            <!--<div class="text-center">-->
+            <!--    <button class="btn" onclick="window.plugins.insomnia.keepAwake()">keep awake</button>-->
+            <!--    <button class="btn" onclick="window.plugins.insomnia.allowSleepAgain()">allow sleep again</button>-->
+            <!--</div>-->
+            
+            <!--<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>-->
+        </div>
+        
+        
+        
+        <script>
+            //phonon.notif('Я готов!', 3000, false);
+            
+            
+            
+            element = document.getElementById('timer');
+
+            fullTime = 60 * 15;
+            currentTime = fullTime;
+            seconds = new ProgressBar.Circle(element, {
+                duration: 1000,
+                strokeWidth: 5,
+                color: "rgba(255, 245, 238, 1)",
+                trailColor: "rgba(255, 245, 238, 0.3)",
+                text: {
+                    value: '00:00',
+                },
+                step: function(state, bar) {
+                    if ( currentTime <= 0 ) {
+                        bar.setText( '00:00' );
+                    } else {
+                        //bar.setText( pad( Math.floor((fullTime - 1 - 1/currentTime)/60), 2 ) + ':' + pad( fullTime - (fullTime - currentTime)%60, 2 ) );
+                        bar.setText( pad(Math.floor(currentTime / 60), 2) + ':' + pad(currentTime % 60, 2) );
+                    }
+                }
+            });
+            
+            phonon.notif('Для запуска таймера нажмите на него.', 5000, false);
+            
+            //var timerElem = document.querySelector('#timer');
+            //timerElem.on('tap', function() {
+            //    timerElem.off('tap');
+            //    window.plugins.insomnia.keepAwake();    // не гасить экран
+            //    window.timerInterval = setInterval(function() {
+            //        if ( currentTime === 0 ) {
+            //            //currentTime = 0;
+            //            clearInterval( window.timerInterval );
+            //            //seconds.setText( '00:00' );
+            //        } else {
+            //            currentTime = currentTime - 1;
+            //        }
+            //        seconds.animate(1 - (currentTime / fullTime));
+            //    }, 1000);
+            //});
+            
+            
+            var stopTimerElems = document.querySelector('.js-stop-timer');
+            for ( var i=0; i <= stopTimerElems.length; i++ ) {
+                stopTimerElems[i].on('tap', function() {
+                    window.plugins.insomnia.allowSleepAgain();  // разрешить гашение экрана
+                    clearInterval( window.timerInterval );
+                });
+            };
+            
+            
+            document.querySelector('[data-popover-id]').on('tap', function() {
+                var id = this['data-popover-id']
+                if ( this['data-status'] === 'closed' ) {
+                    phono.popover('#my-popover').open();
+                }
+            })
+            
+            
+            
+            
+            
+            
+            
+            
+            function pad(n, width, z) {
+                z = z || '0';
+                n = n + '';
+                
+                if ( n.length === width ) {
+                    n = n;
+                } else if ( n.length < width ) {
+                    n = new Array(width - n.length + 1).join(z) + n;
+                }/* else {
+                    n = n.substring(0, width);
+                }*/
+                
+                return n;
+            }
+        </script>
+    </timer>
+    
+    
+    
+    
+    
+    
+    
+    <script>
+        phonon.options({
+            navigator: {
+                defaultPage: 'timer',
+                hashPrefix: '!',
+                animatePages: true,
+                enableBrowserBackButton: false,
+                templateRootDirectory: '',
+                useHash: true,
+            },
+            i18n: null,
+        })
+        
+        phonon.navigator().start();
+        
+        window.body = document.getElementById('body');
+        ontouch(window.body, function(evt, dir, phase, swipetype, distance){
+            var n = phonon.navigator();
+            
+            if ( phase == 'move' && dir == 'right' ) {
+                if ( n.currentPage === 'timer' ) {
+                    n.changePage('tasklist');
+                }
+            } else
+            
+            if ( phase == 'move' && dir == 'left' ) {
+                if ( n.currentPage === 'tasklist' ) {
+                    n.changePage('timer');
+                }
+            }
+        });
+    </script>
+    
+    <script src="js/main.js"></script>
+</body>
