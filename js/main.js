@@ -36,6 +36,12 @@ var Timer = {
             seconds.animate(1 - (currentTime / fullTime));
         }, 1000);
     },
+    
+    addTask: function() {
+        var prompt = phonon.prompt('Введите название задачи', 'Добавление задачи', true, 'Добавить', 'Отменить');
+        prompt.on('confirm', function(inputValue) {} );
+        prompt.on('cancel', function() {} );
+    }
 }
 
 ko.applyBindings(Timer);
