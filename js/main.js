@@ -1,31 +1,31 @@
-var Timer = {
+var Timer = function() {
     
     // Интервал для работы, сек
-    workTime: ko.observable(60 * 15),
+    this.workTime = ko.observable(60 * 15);
     
     // Интервал для отдыха, сек
-    relaxTime: ko.observable(60 * 5),
+    this.relaxTime = ko.observable(60 * 5);
     
     // Текущее время (таймер), сек
-    currentTime: ko.observable(0),
+    this.currentTime = ko.observable(0);
     
     // Количество законченных помидорок
-    tomatos: ko.observable(0),
+    this.tomatos = ko.observable(0);
     
     // Текущая задача из списка дел на сегодня
-    currentTask: ko.observable(null),
+    this.currentTask = ko.observable(null);
     
     // Список дел на сегодня
-    tasks: ko.observableArray([
+    this.tasks = ko.observableArray([
         { name: 'Дописать приложение таймера', tomatos: 0 }
-    ]),
+    ]);
     
-    startTimer: function() {
+    this.startTimer = function() {
         console.log(this)
         this.off('tap');
         window.plugins.insomnia.keepAwake();    // не гасить экран
         window.timerInterval = setInterval(function() {
-            if ( currentTime === 0 ) {
+            if ( this.currentTime === 0 ) {
                 //currentTime = 0;
                 clearInterval( window.timerInterval );
                 window.plugins.insomnia.allowSleepAgain();
@@ -35,11 +35,11 @@ var Timer = {
             }
             seconds.animate(1 - (currentTime / fullTime));
         }, 1000);
-    },
+    }.bind(this);
     
-    addTask: function() {
+    this.addTask = function() {
         log('func')
-        log(Timer.tasks().length)
+        log(this.tasks().length)
         //var prompt = phonon.prompt('Введите название задачи', 'Добавление задачи', true, 'Добавить', 'Отменить');
         //log('promt')
         //prompt.on('confirm', function(inputValue) {
@@ -55,22 +55,22 @@ var Timer = {
         taskNameField.value = taskNameField.value.trim();
         if ( taskNameField.value.length > 0 ) {
             log('task')
-            Timer.tasks.push({ name: taskNameField.value, tomatos: 0 });
-            //Timer.tasks.valueHasMutated();
-            var data = Timer.tasks().slice(0);
-            Timer.tasks([]);
-            Timer.tasks(data);
+            this.tasks.push({ name: taskNameField.value, tomatos: 0 });
+            //this.tasks.valueHasMutated();
+            //var data = this.tasks().slice(0);
+            //this.tasks([]);
+            //this.tasks(data);
         }
         taskNameField.value = '';
         phonon.panel('#addTaskPanel').close();
-    }
-}
+    }.bind(this);
+    var addTaskElem = document.querySelector('#addTaskConfirm');
+    addTaskElem.on('tap', this.addTask);
+};
 
-ko.applyBindings(Timer);
+ko.applyBindings( new Timer() );
 
 
 var timerElem = document.querySelector('#timer');
 timerElem.on('tap', Timer.startTimer);
 
-var addTaskElem = document.querySelector('#addTaskConfirm');
-addTaskElem.on('tap', Timer.addTask);
