@@ -16,40 +16,15 @@
     
     <script src="js/knockout-3.3.0.min.js"></script>
     
+    <link rel="stylesheet" href="css/circle.css">
+    
     <link rel="stylesheet" href="css/fix.css">
 </head>
 <body id="body">
     
     
     
-    <!--<taskList data-page="true">
-        <header class="header-bar">
-            <div class="pull-left">
-                <h1 class="title">Pomodimer</h1>
-            </div>
-            <a class="btn pull-right icon icon-settings" data-popover-id="pop-settings"></a>
-        </header>
-        <div class="content">
-            
-            <ul class="list" id="task-list" data-bind="foreach: tasks">
-                <li class="padded-list">
-                    <a>
-                        <span class="" data-bind="text: name"></span>
-                        <span class="pull-right" data-bind="text: tomatos"></span>
-                    </a>
-                </li>
-            </ul>
-            <ul class="list">
-                <li class="padded-list" id="add-task">
-                    <a>
-                        <span class="icon icon-add pull-left"></span>
-                        <span>Добавить новую задачу</span>
-                    </a>
-                </li>
-            </ul>
-            
-        </div>
-    </taskList>-->
+   
     
     
     
@@ -90,15 +65,15 @@
             <div class="tab-content" id="tab-tasklist">
                 <ul class="list" id="task-list" data-bind="foreach: tasks">
                     <li class="padded-list">
-                        <a>
-                            <span class="" data-bind="text: name"></span>
+                        <a class="js-startTimer" onclick="Timer().startTimer();">
                             <span class="pull-right" data-bind="text: tomatos"></span>
+                            <span class="" data-bind="text: name"></span>
                         </a>
                     </li>
                 </ul>
                 <ul class="list">
                     <li class="padded-list" id="add-task">
-                        <a href="" data-panel-id="addTaskPanel">
+                        <a data-panel-id="addTaskPanel">
                             <span class="icon icon-add pull-left"></span>
                             <span>Добавить новую задачу</span>
                         </a>
@@ -112,26 +87,21 @@
             <div class="tab-content" id="tab-timer">
                 <h3 id="current-task-name" class="text-center" data-bind="text: currentTask"></h3>
                 
-                <div id="timer"></div>
+                <div id="timer">
+                    <div class="c100 p0">
+                        <span>25%</span>
+                        <div class="slice">
+                            <div class="bar"></div>
+                            <div class="fill"></div>
+                        </div>
+                    </div>
+                </div>
                 
                 <!--<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>-->
             </div>
         </div>
         
-        
-        
-        <!--<div id="add-task-panel" class="panel">-->
-        <!--    <header class="header-bar">-->
-        <!--        <!--<a class="btn icon icon-close pull-right" href="#" data-panel-close="true"></a>-->-->
-        <!--        <h1 class="title pull-left">Добавление задачи</h1>-->
-        <!--    </header>-->
-        <!---->
-        <!--    <div class="content">-->
-        <!--        <p class="padded-full">-->
-        <!--            <input type="text" placeholder="Название задачи">-->
-        <!--        </p>-->
-        <!--    </div>-->
-        <!--</div>-->
+
         
         
         
@@ -142,52 +112,38 @@
             
             element = document.getElementById('timer');
 
-            fullTime = 60 * 15;
-            currentTime = fullTime;
-            seconds = new ProgressBar.Circle(element, {
+            //fullTime = 60 * 15;
+            currentTime = '00:00';
+            window.bigTimer = new ProgressBar.Circle(element, {
                 duration: 1000,
                 strokeWidth: 5,
                 color: "rgba(255, 245, 238, 1)",
                 trailColor: "rgba(255, 245, 238, 0.3)",
-                text: {
-                    value: '00:00',
-                },
-                step: function(state, bar) {
-                    if ( currentTime <= 0 ) {
-                        bar.setText( '00:00' );
-                    } else {
-                        //bar.setText( pad( Math.floor((fullTime - 1 - 1/currentTime)/60), 2 ) + ':' + pad( fullTime - (fullTime - currentTime)%60, 2 ) );
-                        bar.setText( pad(Math.floor(currentTime / 60), 2) + ':' + pad(currentTime % 60, 2) );
-                    }
-                }
+                //text: {
+                //    value: '00:00',
+                //},
+                //step: function(state, bar) {
+                //    if ( currentTime <= 0 ) {
+                //        bar.setText( '00:00' );
+                //    } else {
+                //        //bar.setText( pad( Math.floor((fullTime - 1 - 1/currentTime)/60), 2 ) + ':' + pad( fullTime - (fullTime - currentTime)%60, 2 ) );
+                //        bar.setText( pad(Math.floor(currentTime / 60), 2) + ':' + pad(currentTime % 60, 2) );
+                //    }
+                //}
+            });
+            window.bigTimer.animate(1, function() {
+                window.bigTimer.animate(0);
             });
             
-            //phonon.notif('Для запуска таймера нажмите на него.', 5000, false);
-            
-            //var timerElem = document.querySelector('#timer');
-            //timerElem.on('tap', function() {
-            //    timerElem.off('tap');
-            //    window.plugins.insomnia.keepAwake();    // не гасить экран
-            //    window.timerInterval = setInterval(function() {
-            //        if ( currentTime === 0 ) {
-            //            //currentTime = 0;
-            //            clearInterval( window.timerInterval );
-            //            //seconds.setText( '00:00' );
-            //        } else {
-            //            currentTime = currentTime - 1;
-            //        }
-            //        seconds.animate(1 - (currentTime / fullTime));
-            //    }, 1000);
-            //});
             
             
-            var stopTimerElems = document.querySelector('.js-stop-timer');
-            for ( var i=0; i <= stopTimerElems.length; i++ ) {
-                stopTimerElems[i].on('tap', function() {
-                    window.plugins.insomnia.allowSleepAgain();  // разрешить гашение экрана
-                    clearInterval( window.timerInterval );
-                });
-            };
+            //var stopTimerElems = document.querySelector('.js-stop-timer');
+            //for ( var i=0; i <= stopTimerElems.length; i++ ) {
+            //    stopTimerElems[i].on('tap', function() {
+            //        window.plugins.insomnia.allowSleepAgain();  // разрешить гашение экрана
+            //        clearInterval( window.timerInterval );
+            //    });
+            //};
             
             
             //document.querySelector('[data-popover-id]').on('tap', function() {
@@ -231,7 +187,7 @@
                         <input type="text" placeholder="Название задачи" />
                     </p>
                     <p class="padded-full text-right">
-                        <a class="btn primary" id="addTaskConfirm">Добавить</a>
+                        <a class="btn primary" id="addTaskConfirm" data-bind="click: addTask">Добавить</a>
                     </p>
                 </div>
         </div>
@@ -276,6 +232,15 @@
         //});
         
         Logger.show();
+        
+        // Заглушка
+        window.plugins = window.plugins
+                        || {
+                            'insomnia': {
+                                keepAwake: function(){},
+                                allowSleepAgain: function(){}
+                            }
+                        };
     </script>
     
     <script src="js/main.js"></script>

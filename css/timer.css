@@ -19,6 +19,13 @@
 
 
 
+#timer .bar {
+    transition: transform 1s linear 0s;
+}
+
+
+
+
 
 
 

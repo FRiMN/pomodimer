@@ -25,6 +25,11 @@ body, button, input, label, p, select, textarea {
 .list li a {
     color: white;
 }
+li.padded-list > a > span.pull-right + span {
+    display: inline-block;
+    overflow: hidden;
+    max-width: calc(100% - 52px);
+}
 
 .dialog .content h3 {
     color: #d32f2f;

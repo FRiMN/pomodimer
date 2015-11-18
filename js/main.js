@@ -20,57 +20,57 @@ var Timer = function() {
         { name: 'Дописать приложение таймера', tomatos: 0 }
     ]);
     
+    
+    //var timerElems = document.getElementsByClassName('js-startTimer');
+    //for (var i = 0; i < timerElems.length; i++) {
+    //    timerElems[i].on('click', this.startTimer);
+    //};
+    //timerElem.on('tap', this.startTimer);
     this.startTimer = function() {
-        console.log(this)
-        this.off('tap');
+        log('timer')
+        var bigTimer = document.querySelector('#timer > div .bar');
+        //timerElem.off('tap');
         window.plugins.insomnia.keepAwake();    // не гасить экран
-        window.timerInterval = setInterval(function() {
-            if ( this.currentTime === 0 ) {
-                //currentTime = 0;
-                clearInterval( window.timerInterval );
+        this.currentTime( this.relaxTime() );
+        this.timerInterval = setInterval(function() {
+            if ( this.currentTime() === 0 ) {
+                log(0)
+                clearInterval( this.timerInterval );
                 window.plugins.insomnia.allowSleepAgain();
-                //seconds.setText( '00:00' );
             } else {
-                currentTime = currentTime - 1;
+                log( this.currentTime() )
+                this.currentTime( this.currentTime() - 1 );
             }
-            seconds.animate(1 - (currentTime / fullTime));
+            //window.bigTimer.animate(1 - ( this.currentTime() / this.relaxTime() ));
+            //bigTimer.className = '';
+            //bigTimer.className = 'c100 p' + (( this.currentTime() / this.relaxTime() ) * 100).toFixed(0);
+            var deg = 360 - ( 360 / this.relaxTime() * this.currentTime() );
+            bigTimer.style.transform = 'rotate(' + deg + 'deg)';
         }, 1000);
     }.bind(this);
+    
     
     this.addTask = function() {
         log('func')
         log(this.tasks().length)
-        //var prompt = phonon.prompt('Введите название задачи', 'Добавление задачи', true, 'Добавить', 'Отменить');
-        //log('promt')
-        //prompt.on('confirm', function(inputValue) {
-        //    log('on')
-        //    inputValue = inputValue.trim();
-        //    if ( inputValue.length > 0 ) {
-        //        log('task')
-        //        Timer.tasks.push({ name: inputValue, tomatos: 0 });
-        //    }
-        //});
-        //prompt.on('cancel', function() {} );
         var taskNameField = document.querySelector('#addTaskPanel .content input');
         taskNameField.value = taskNameField.value.trim();
         if ( taskNameField.value.length > 0 ) {
             log('task')
             this.tasks.push({ name: taskNameField.value, tomatos: 0 });
-            //this.tasks.valueHasMutated();
-            //var data = this.tasks().slice(0);
-            //this.tasks([]);
-            //this.tasks(data);
         }
         taskNameField.value = '';
         phonon.panel('#addTaskPanel').close();
     }.bind(this);
-    var addTaskElem = document.querySelector('#addTaskConfirm');
-    addTaskElem.on('tap', this.addTask);
+    //var addTaskElem = document.querySelector('#addTaskConfirm');
+    //addTaskElem.on('tap', this.addTask);
+    
+    return this;
 };
+var T = new Timer();
 
-ko.applyBindings( new Timer() );
+ko.applyBindings( T );
 
 
-var timerElem = document.querySelector('#timer');
-timerElem.on('tap', Timer.startTimer);
+
 
