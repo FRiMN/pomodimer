@@ -8,15 +8,17 @@
     <script src="js/phonon.min.js"></script>
     <link rel="stylesheet" href="css/phonon.min.css">
     
-    <script src="js/progressbar.min.js"></script>
+    <!--<script src="js/progressbar.min.js"></script>-->
     
-    <script src="js/touch.js"></script>
+    <!--<script src="js/touch.js"></script>-->
     
     <script type="text/javascript" src="js/Logger.js"></script>
     
+    <script src="js/ProgressCircle.min.js"></script>
+    
     <script src="js/knockout-3.3.0.min.js"></script>
     
-    <link rel="stylesheet" href="css/circle.css">
+    <!--<link rel="stylesheet" href="css/circle.css">-->
     
     <link rel="stylesheet" href="css/fix.css">
 </head>
@@ -87,15 +89,17 @@
             <div class="tab-content" id="tab-timer">
                 <h3 id="current-task-name" class="text-center" data-bind="text: currentTask"></h3>
                 
-                <div id="timer">
-                    <div class="c100 p0">
-                        <span>25%</span>
-                        <div class="slice">
-                            <div class="bar"></div>
-                            <div class="fill"></div>
-                        </div>
-                    </div>
-                </div>
+                <!--<div id="timer">-->
+                <!--    <div class="c100 p0">-->
+                <!--        <span>25%</span>-->
+                <!--        <div class="slice">-->
+                <!--            <div class="bar"></div>-->
+                <!--            <div class="fill"></div>-->
+                <!--        </div>-->
+                <!--    </div>-->
+                <!--</div>-->
+                
+                <canvas id="timer" width="180" height="180"></canvas>
                 
                 <!--<div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>-->
             </div>
@@ -108,32 +112,6 @@
         <script>
             //phonon.notif('Я готов!', 3000, false);
             
-            
-            
-            element = document.getElementById('timer');
-
-            //fullTime = 60 * 15;
-            currentTime = '00:00';
-            window.bigTimer = new ProgressBar.Circle(element, {
-                duration: 1000,
-                strokeWidth: 5,
-                color: "rgba(255, 245, 238, 1)",
-                trailColor: "rgba(255, 245, 238, 0.3)",
-                //text: {
-                //    value: '00:00',
-                //},
-                //step: function(state, bar) {
-                //    if ( currentTime <= 0 ) {
-                //        bar.setText( '00:00' );
-                //    } else {
-                //        //bar.setText( pad( Math.floor((fullTime - 1 - 1/currentTime)/60), 2 ) + ':' + pad( fullTime - (fullTime - currentTime)%60, 2 ) );
-                //        bar.setText( pad(Math.floor(currentTime / 60), 2) + ':' + pad(currentTime % 60, 2) );
-                //    }
-                //}
-            });
-            window.bigTimer.animate(1, function() {
-                window.bigTimer.animate(0);
-            });
             
             
             

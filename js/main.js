@@ -21,31 +21,49 @@ var Timer = function() {
     ]);
     
     
-    //var timerElems = document.getElementsByClassName('js-startTimer');
-    //for (var i = 0; i < timerElems.length; i++) {
-    //    timerElems[i].on('click', this.startTimer);
-    //};
-    //timerElem.on('tap', this.startTimer);
     this.startTimer = function() {
         log('timer')
         var bigTimer = document.querySelector('#timer > div .bar');
         //timerElem.off('tap');
         window.plugins.insomnia.keepAwake();    // не гасить экран
         this.currentTime( this.relaxTime() );
+        var progress = 0;
         this.timerInterval = setInterval(function() {
             if ( this.currentTime() === 0 ) {
-                log(0)
                 clearInterval( this.timerInterval );
                 window.plugins.insomnia.allowSleepAgain();
             } else {
-                log( this.currentTime() )
                 this.currentTime( this.currentTime() - 1 );
             }
-            //window.bigTimer.animate(1 - ( this.currentTime() / this.relaxTime() ));
-            //bigTimer.className = '';
-            //bigTimer.className = 'c100 p' + (( this.currentTime() / this.relaxTime() ) * 100).toFixed(0);
-            var deg = 360 - ( 360 / this.relaxTime() * this.currentTime() );
-            bigTimer.style.transform = 'rotate(' + deg + 'deg)';
+            //var deg = 360 - ( 360 / this.relaxTime() * this.currentTime() );
+            //bigTimer.style.transform = 'rotate(' + deg + 'deg)';
+            
+            
+            
+            progress = 1 - ( 1 / this.relaxTime() * this.currentTime() );
+            
+            var myCanvas = document.getElementById('timer');
+
+            var circle = new ProgressCircle({
+                canvas: myCanvas,
+                minRadius: 80,
+                arcWidth: 5,
+            });
+    
+            circle.addEntry({
+                fillColor: 'rgba(255, 255, 255, 0.5)',
+                progressListener: function() {
+                    return progress;
+                },
+            });
+            
+            circle.start(100);
+            
+            
+            
+            
+            
+            
         }, 1000);
     }.bind(this);
     
