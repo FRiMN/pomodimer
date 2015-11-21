@@ -1,10 +1,13 @@
 var Timer = function() {
     
     // Интервал для работы, сек
-    this.workTime = ko.observable(60 * 15);
+    this.workTime = ko.observable(60 * 25);
     
     // Интервал для отдыха, сек
     this.relaxTime = ko.observable(60 * 5);
+    
+    // Интервал для длительного отдыха, сек
+    this.bigRelaxTime = ko.observable(60 * 20);
     
     // Текущее время (таймер), сек
     this.currentTime = ko.observable(0);
@@ -21,50 +24,58 @@ var Timer = function() {
     ]);
     
     
-    this.startTimer = function() {
-        log('timer')
-        var bigTimer = document.querySelector('#timer > div .bar');
-        //timerElem.off('tap');
-        window.plugins.insomnia.keepAwake();    // не гасить экран
-        this.currentTime( this.relaxTime() );
-        var progress = 0;
-        this.timerInterval = setInterval(function() {
-            if ( this.currentTime() === 0 ) {
-                clearInterval( this.timerInterval );
-                window.plugins.insomnia.allowSleepAgain();
-            } else {
-                this.currentTime( this.currentTime() - 1 );
-            }
-            //var deg = 360 - ( 360 / this.relaxTime() * this.currentTime() );
-            //bigTimer.style.transform = 'rotate(' + deg + 'deg)';
-            
-            
-            
-            progress = 1 - ( 1 / this.relaxTime() * this.currentTime() );
-            
-            var myCanvas = document.getElementById('timer');
-
-            var circle = new ProgressCircle({
-                canvas: myCanvas,
-                minRadius: 80,
-                arcWidth: 5,
-            });
+    var bigTimer = document.querySelector('#timer > div .bar');
+    var phase = 'work';
     
-            circle.addEntry({
-                fillColor: 'rgba(255, 255, 255, 0.5)',
-                progressListener: function() {
-                    return progress;
-                },
-            });
+    this.startTimer = function() {
+        if ( !window.timerStarted ) {
+            log('timer')
             
-            circle.start(100);
+            //timerElem.off('tap');
+            window.plugins.insomnia.keepAwake();    // не гасить экран
+            var fullTime = undefined;
             
+            if ( phase === 'work' ) {
+                fullTime = this.workTime();
+            } else {
+                fullTime = this.relaxTime();
+            }
             
-            
-            
-            
-            
-        }, 1000);
+            this.currentTime( fullTime );
+            var progress = 0;
+            this.timerInterval = setInterval(function() {
+                if ( this.currentTime() === 0 ) {
+                    clearInterval( this.timerInterval );
+                    window.plugins.insomnia.allowSleepAgain();
+                } else {
+                    this.currentTime( this.currentTime() - 1 );
+                }
+                //var deg = 360 - ( 360 / this.relaxTime() * this.currentTime() );
+                //bigTimer.style.transform = 'rotate(' + deg + 'deg)';
+                
+                
+                
+                progress = 1 - ( 1 / this.relaxTime() * this.currentTime() );
+                
+                var myCanvas = document.getElementById('timer');
+    
+                var circle = new ProgressCircle({
+                    canvas: myCanvas,
+                    minRadius: 80,
+                    arcWidth: 5,
+                });
+        
+                circle.addEntry({
+                    fillColor: 'rgba(255, 255, 255, 0.5)',
+                    progressListener: function() {
+                        return progress;
+                    },
+                });
+                
+                circle.start(100);
+                
+            }, 1000);
+        }
     }.bind(this);
     
     
