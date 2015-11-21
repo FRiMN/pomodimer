@@ -69,7 +69,7 @@
             <div class="tab-content" id="tab-tasklist">
                 <ul class="list" id="task-list" data-bind="foreach: tasks">
                     <li class="padded-list">
-                        <a class="js-startTimer" onclick="Timer().startTimer();">
+                        <a class="js-startTimer" onclick="" data-bind="click: $parent.startTimer">
                             <span class="pull-right" data-bind="text: tomatos"></span>
                             <span class="" data-bind="text: name"></span>
                         </a>

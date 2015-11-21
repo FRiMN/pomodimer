@@ -49,10 +49,12 @@ var Timer = function() {
     this.bigRelaxTime = ko.observable(60 * 20);
     
     // Состояние, в котором находится таймер [stopped, working, relaxing, bigrelaxing]
-    this.state = 'stopped';
+    this.state = 'stopped'; // TODO: function
     
+    // Список задач на день
     this.tasks = ko.observableArray([]);
     
+    // Обновление списка задач на день
     this.tasksSync = function() {
         var currDate = new Date();
         this.tasks.removeAll();
@@ -71,6 +73,7 @@ var Timer = function() {
     }.bind(this);
     this.tasksSync();
     
+    // Добавление задачи
     this.addTask = function() {
         var taskNameField = document.querySelector('#addTaskPanel .content input');
         taskNameField.value = taskNameField.value.trim();
@@ -81,6 +84,11 @@ var Timer = function() {
         taskNameField.value = '';
         phonon.panel('#addTaskPanel').close();
         this.tasksSync();
+    }.bind(this);
+    
+    this.startTimer = function(task) {
+        console.log('timer', task, this)
+        log( task.toString() )
     }.bind(this);
 }
 ko.applyBindings( new Timer() );
