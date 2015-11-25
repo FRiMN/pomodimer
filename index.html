@@ -16,9 +16,16 @@
     
     <script type="text/javascript" src="js/Logger.js"></script>
     
-    <script src="js/ProgressCircle.min.js"></script>
+    <!--<script src="js/ProgressCircle.min.js"></script>-->
     
-    <script src="js/knockout-3.3.0.min.js"></script>
+    <!--<script src="js/knockout-3.3.0.min.js"></script>-->
+    
+    <script src="js/zepto.min.js"></script>
+    <script src="js/zepto-touch.js"></script>
+    
+    <script src="js/underscore-min.js"></script>
+    <script src="js/backbone.js"></script>
+    <script src="js/backbone.localStorage-min.js"></script>
     
     <!--<link rel="stylesheet" href="css/circle.css">-->
     
@@ -60,17 +67,19 @@
             
             
             <div class="tab-content" id="tab-tasklist">
-                <div id="taskListBuilding" class="circle-progress padded-full" data-bind="visible: taskListBuilding">
+                <div id="taskListBuilding" class="circle-progress padded-full">
                     <div class="spinner"></div>
                 </div>
-                <ul class="list" id="task-list" data-bind="foreach: tasks, visible: taskListBuilding() != true">
+                <ul class="list" id="task-list">
+                </ul>
+                <script type="text/template" id="tasklist_template">
                     <li class="padded-list">
-                        <a class="js-startTimer" onclick="" data-bind="click: $parent.startTimer">
-                            <span class="pull-right" data-bind="text: tomatos"></span>
-                            <span class="" data-bind="text: name"></span>
+                        <a class="js-startTimer">
+                            <span class="pull-right"><%= tomatos %></span>
+                            <span><%- name %></span>
                         </a>
                     </li>
-                </ul>
+                </script>
                 <ul class="list">
                     <li class="padded-list" id="add-task">
                         <a data-panel-id="addTaskPanel">
@@ -125,54 +134,8 @@
     </timer>
     
     
+
     
     
-    
-    
-    
-    <script>
-        phonon.options({
-            navigator: {
-                defaultPage: 'timer',
-                hashPrefix: '!',
-                animatePages: true,
-                enableBrowserBackButton: false,
-                templateRootDirectory: '',
-                useHash: false,
-            },
-            i18n: null,
-        })
-        
-        phonon.navigator().start();
-        
-        //window.body = document.getElementById('body');
-        //ontouch(window.body, function(evt, dir, phase, swipetype, distance){
-        //    var n = phonon.navigator();
-        //    
-        //    if ( phase == 'move' && dir == 'right' ) {
-        //        if ( n.currentPage === 'timer' ) {
-        //            n.changePage('tasklist');
-        //        }
-        //    } else
-        //    
-        //    if ( phase == 'move' && dir == 'left' ) {
-        //        if ( n.currentPage === 'tasklist' ) {
-        //            n.changePage('timer');
-        //        }
-        //    }
-        //});
-        
-        Logger.show();
-        
-        // Заглушка
-        window.plugins = window.plugins
-                        || {
-                            'insomnia': {
-                                keepAwake: function(){},
-                                allowSleepAgain: function(){}
-                            }
-                        };
-    </script>
-    
-    <script src="js/main2.js"></script>
+    <script src="js/main3.js"></script>
 </body>

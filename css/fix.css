@@ -53,6 +53,10 @@ li.padded-list > a > span.pull-right + span {
 
 .circle-progress {
     background-color: transparent;
+    display: none;
+}
+.circle-progress.active {
+    display: block;
 }
 .circle-progress.active .spinner {
     border-color: #e53935;
@@ -65,4 +69,13 @@ li.padded-list > a > span.pull-right + span {
 
 #tab-timer.tab-content {
     height: auto !important;
+}
+
+
+
+
+script,
+style,
+.hide {
+    display: none;
 }
