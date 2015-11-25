@@ -2,9 +2,12 @@ nav.tabs,
 .header-bar {
     background-color: #e53935;
 }
-.header-bar .title {
+/*.header-bar .title {
     line-height: 1;
 }
+.header-bar h1.title {
+    height: calc(100% - .67em * 2);
+}*/
 nav.tabs .tab-items .tab-item {
     color: white;
 }
@@ -46,4 +49,20 @@ li.padded-list > a > span.pull-right + span {
 #logger,
 #loggerTab {
     box-sizing: content-box;
+}
+
+.circle-progress {
+    background-color: transparent;
+}
+.circle-progress.active .spinner {
+    border-color: #e53935;
+    border-bottom-color: #eee;
+}
+.circle-progress.active.rev .spinner {
+    border-color: #eee;
+    border-bottom-color: #e53935;
+}
+
+#tab-timer.tab-content {
+    height: auto !important;
 }

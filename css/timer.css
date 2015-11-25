@@ -1,12 +1,16 @@
 #timer {
     width: 70%;
     margin-left: 15%;
-    margin-top: 12%;
+    margin-top: 5%;
     margin-bottom: 15%;
 }
 #timer .progressbar-text {
     font-size: 55px;
     top: calc(50% - 5px) !important;
+}
+
+#timer .time {
+    font-size: 90px;
 }
 
 #current-task-name {

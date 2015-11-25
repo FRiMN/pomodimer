@@ -27,21 +27,14 @@
 <body id="body">
     
     
-    
-   
-    
-    
-    
-    
-    
-    
+
     
     <timer data-page="true">
         <link rel="stylesheet" href="css/timer.css">
         
         <header class="header-bar">
             <div class="pull-left">
-                <h1 class="title">Pomodimer</h1>
+                <h2 class="title">Pomodimer</h2>
             </div>
             <a class="btn pull-right icon icon-settings" data-popover-id="pop-settings"></a>
         </header>
@@ -67,7 +60,10 @@
             
             
             <div class="tab-content" id="tab-tasklist">
-                <ul class="list" id="task-list" data-bind="foreach: tasks">
+                <div id="taskListBuilding" class="circle-progress padded-full" data-bind="visible: taskListBuilding">
+                    <div class="spinner"></div>
+                </div>
+                <ul class="list" id="task-list" data-bind="foreach: tasks, visible: taskListBuilding() != true">
                     <li class="padded-list">
                         <a class="js-startTimer" onclick="" data-bind="click: $parent.startTimer">
                             <span class="pull-right" data-bind="text: tomatos"></span>
@@ -89,9 +85,9 @@
             
             
             <div class="tab-content" id="tab-timer">
-                <h3 id="current-task-name" class="text-center" data-bindx="text: currentTask"></h3>
+                <h3 id="current-task-name" class="text-center" data-bind="text: currentTask().name"></h3>
                 
-                <!--<div id="timer">-->
+                <div id="timer">
                 <!--    <div class="c100 p0">-->
                 <!--        <span>25%</span>-->
                 <!--        <div class="slice">-->
@@ -99,7 +95,8 @@
                 <!--            <div class="fill"></div>-->
                 <!--        </div>-->
                 <!--    </div>-->
-                <!--</div>-->
+                    <div class="text-center time">00:00</div>
+                </div>
                 
                 <canvas id="timer" width="180" height="180"></canvas>
                 
@@ -108,58 +105,12 @@
         </div>
         
 
-        
-        
-        
-        <script>
-            //phonon.notif('Я готов!', 3000, false);
-            
-            
-            
-            
-            //var stopTimerElems = document.querySelector('.js-stop-timer');
-            //for ( var i=0; i <= stopTimerElems.length; i++ ) {
-            //    stopTimerElems[i].on('tap', function() {
-            //        window.plugins.insomnia.allowSleepAgain();  // разрешить гашение экрана
-            //        clearInterval( window.timerInterval );
-            //    });
-            //};
-            
-            
-            //document.querySelector('[data-popover-id]').on('tap', function() {
-            //    var id = this['data-popover-id']
-            //    if ( this['data-status'] === 'closed' ) {
-            //        phono.popover('#my-popover').open();
-            //    }
-            //})
-            
-            
-            
-            
-            
-            
-            
-            
-            function pad(n, width, z) {
-                z = z || '0';
-                n = n + '';
-                
-                if ( n.length === width ) {
-                    n = n;
-                } else if ( n.length < width ) {
-                    n = new Array(width - n.length + 1).join(z) + n;
-                }/* else {
-                    n = n.substring(0, width);
-                }*/
-                
-                return n;
-            }
-        </script>
+
         
         <div id="addTaskPanel" class="panel">
                 <header class="header-bar">
                     <a class="btn icon icon-close pull-right" href="#" data-panel-close="true"></a>
-                    <h1 class="title">Добавить задачу</h1>
+                    <h2 class="title padded-left">Добавить задачу</h2>
                 </header>
         
                 <div class="content">
