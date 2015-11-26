@@ -73,8 +73,8 @@
                 <ul class="list" id="task-list">
                 </ul>
                 <script type="text/template" id="tasklist_template">
-                    <li class="padded-list">
-                        <a class="js-startTimer">
+                    <li class="padded-list <% (id === active_id) ? print('active') : print(); %>">
+                        <a class="js-startTimer" data-id="<%= id %>">
                             <span class="pull-right"><%= tomatos %></span>
                             <span><%- name %></span>
                         </a>

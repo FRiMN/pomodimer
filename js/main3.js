@@ -69,28 +69,46 @@ var TasksView = Backbone.View.extend({
     
     initialize: function() {
         this.render();
+        this.active_id = null;
     },
     
     render: function() {
         console.log('render', this)
+        var self = this;
         var preloader = '#taskListBuilding';
         
         this.$el.hide();
         phonon.preloader(preloader).show();
         
         var node_items = ''
+        var attr = {active_id: this.active_id};
         _.each(tasks.models, function(item) {
             var template = _.template( $('#tasklist_template').html());
-            node_items = node_items + template(item.attributes);
+            _.extend(attr, item.attributes);
+            node_items = node_items + template(attr);
         });
         this.$el.html( node_items );
         
         phonon.preloader(preloader).hide();
         this.$el.show();
-    }
+        
+        
+        // Events
+        $('#task-list a.js-startTimer').on('click', function(e) {
+            var id = $(this).data('id');
+            var task = _.find(tasks.models, function(item) {
+                return item.id === id;
+            })
+            
+            self.active_id = id;
+            self.render();
+        });
+    },
 })
 var tasks_view = new TasksView({ el: $('#task-list') });
 tasks.on('change', tasks_view.render, tasks_view);
+
+
 
 
 

@@ -72,6 +72,12 @@ li.padded-list > a > span.pull-right + span {
 }
 
 
+li.padded-list.active {
+    background-color: #e53935;
+    box-shadow: inset -15px 0 17px -8px #ffebee;
+}
+
+
 
 
 script,
