@@ -1,6 +1,13 @@
 nav.tabs,
 .header-bar {
     background-color: #e53935;
+    transition: background-color 1s ease 0s;
+}
+body[data-state="relaxing"] .header-bar {
+    background-color: #4dd0e1;
+}
+body[data-state="bigrelaxing"] .header-bar {
+    background-color: #d4e157;
 }
 /*.header-bar .title {
     line-height: 1;

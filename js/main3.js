@@ -38,21 +38,23 @@ var Timer = Backbone.Model.extend({
         currentTime: 0,
         timeLeft: 0,
         
-        workTime: 60 * 2,
-        relaxTime: 60 * 1,
-        bigRelaxTime: 60 * 5,
+        workTime: 10 * 2,
+        relaxTime: 10 * 1,
+        bigRelaxTime: 10 * 5,
         
         currentTask: null,
         
         currentState: 'stopped',
     },
     
-    start: function() {
+    start: function(state) {
         this.set({
-            currentTask: tasks_view.active_id,
-            currentState: 'working',
+            currentTask: _.find(tasks.models, function(item) {
+                return item.id === tasks_view.active_id;
+            }),
+            currentState: state || 'working',
             startTime: Date.now(),
-        })
+        });
         
         this.update(this);
     },
@@ -62,22 +64,41 @@ var Timer = Backbone.Model.extend({
         self.set({ currentTime: Date.now() });
         
         var fullTime;
+        var nextState;
+        var task = self.get('currentTask');
         switch ( self.get('currentState') ) {
             case 'working':
                 fullTime = self.get('workTime');
+                if ( (task.get('tomatos')+1) % 4 === 0 ) {
+                    nextState = 'bigrelaxing';
+                } else {
+                    nextState = 'relaxing';
+                }
                 break;
             case 'relaxing':
                 fullTime = self.get('relaxTime');
+                nextState = 'working';
                 break;
             case 'bigrelaxing':
                 fullTime = self.get('bigRelaxTime');
+                nextState = 'working';
                 break;
         }
         self.set({ fullTime: fullTime });
         
         self.set({ timeLeft: fullTime - ( (self.get('currentTime') - self.get('startTime')) / 1000 ) });
         
-        _.delay(self.update, 200, self);
+        var tl = self.get('timeLeft');
+        if ( tl <= 0 ) {
+            var tm = task.get('tomatos');
+            if ( self.get('currentState') == 'working' ) {
+                task.set({ tomatos: tm+1 });
+                task.sync('update', task);
+            }
+            self.start(nextState);
+        } else {
+            _.delay(self.update, 200, self);
+        }
     }
 })
 var timer = new Timer();
@@ -104,6 +125,8 @@ var TimerView = Backbone.View.extend({
         this.$el.find('.time').text( tt );
         
         $('#mini-timer').text( tt );
+        
+        $('body').data( 'state', timer.get('currentState') );
     }
 })
 var timer_view = new TimerView({ el: $('#timer') });
@@ -129,7 +152,8 @@ var Task = Backbone.Model.extend({
     initialize: function() {
         this.bind('error', function(model, error) {
             alert(error);
-        })
+        });
+        //this.listenTo(this, 'change', this.sync());
     }
 })
 
@@ -143,9 +167,6 @@ tasks.reset( getTodayTasks() );
 
 
 var TasksView = Backbone.View.extend({
-    //tagName: 'div',
-    //className: 'tasks',
-    
     initialize: function() {
         this.render();
         this.active_id = null;
