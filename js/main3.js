@@ -1,4 +1,4 @@
-Logger.show();
+//Logger.show();
 
 
 phonon.options({
@@ -28,6 +28,85 @@ window.plugins = window.plugins
 
 
 
+
+
+
+
+var Timer = Backbone.Model.extend({
+    defaults: {
+        startTime: undefined,
+        currentTime: 0,
+        timeLeft: 0,
+        
+        workTime: 60 * 2,
+        relaxTime: 60 * 1,
+        bigRelaxTime: 60 * 5,
+        
+        currentTask: null,
+        
+        currentState: 'stopped',
+    },
+    
+    start: function() {
+        this.set({
+            currentTask: tasks_view.active_id,
+            currentState: 'working',
+            startTime: Date.now(),
+        })
+        
+        this.update(this);
+    },
+    
+    update: function(self) {
+        //console.log('>> update', self.attributes)
+        self.set({ currentTime: Date.now() });
+        
+        var fullTime;
+        switch ( self.get('currentState') ) {
+            case 'working':
+                fullTime = self.get('workTime');
+                break;
+            case 'relaxing':
+                fullTime = self.get('relaxTime');
+                break;
+            case 'bigrelaxing':
+                fullTime = self.get('bigRelaxTime');
+                break;
+        }
+        self.set({ fullTime: fullTime });
+        
+        self.set({ timeLeft: fullTime - ( (self.get('currentTime') - self.get('startTime')) / 1000 ) });
+        
+        _.delay(self.update, 200, self);
+    }
+})
+var timer = new Timer();
+
+
+
+var TimerView = Backbone.View.extend({
+    initialize: function() {
+        this.listenTo(timer, 'change', this.render);
+        this.render();
+    },
+    
+    render: function() {
+        //console.log('render', this)
+        var self = this;
+        
+        var t = timer.get('timeLeft');
+        //console.log(t)
+        
+        var mins = Math.floor( t / 60 ); mins = (mins < 0) ? 0 : mins;
+        var secs = Math.floor( t % 60 ); secs = (secs < 0) ? 0 : secs;
+        var tt = pad(mins.toFixed(0), 2) + ':' + pad(secs.toFixed(0), 2)
+        
+        this.$el.find('.time').text( tt );
+        
+        $('#mini-timer').text( tt );
+    }
+})
+var timer_view = new TimerView({ el: $('#timer') });
 
 
 
@@ -101,6 +180,7 @@ var TasksView = Backbone.View.extend({
             })
             
             self.active_id = id;
+            timer.start();
             self.render();
         });
     },
@@ -142,4 +222,16 @@ function getTodayTasks() {
     })
     
     return today_tasks;
+}
+
+
+function pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    
+    if ( n.length < width ) {
+        n = new Array(width - n.length + 1).join(z) + n;
+    }
+    
+    return n;
 }
